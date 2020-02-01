@@ -8,6 +8,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style> 
+    .error-msg
+    {
+        background-color: tomato;
+        color: white;
+        width: 200px;
+        padding: 20px;
+        position: fixed;
+        bottom: 30px;
+        border-radius: 32px;
+        text-align: center;
+        font-weight: bold;
+        box-shadow: 6px 6px 12px rgba(0,0,0,0.6);
+        right: -280px;
+        transition: all 1s ease;
+    }
+    .active
+    {
+        right: 30px;
+    }
+
+    </style>
 </head>
 
 <body>
@@ -25,16 +47,26 @@
         </section>
         <section class="row" id="main">
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="pop"></span>
+                Population: <span id="population"> </span>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="countryname"></span>
+                Country Name: <span id="countryname"> </span>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="capital"></span>
+                Capital: <span id="capital"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                Flag: <span id="flag"> </span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                Location: <span id="location"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
+    </div>
+
+    <div class="error-msg">
+        Error Message!
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -47,6 +79,49 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <script>
+        
+        function getCSharpData()
+        {
+            // fetch("https://csharp-server.kostasx.repl.co/")
+            // .then(function(response)
+            // {
+            //     console.log(response);
+            //     return response.text();                
+            // })
+            // .then(function(text)
+            // {
+            //     console.log(text);
+            // })
+            // .catch(function(error)
+            // {
+            //     console.log("Error!!!", error);
+            // });
+
+            fetch("https://csharp-server.kostasx.repl.co/")
+            .then(handleResponse)
+            .then(handleData)
+            .catch(handleError);
+        }
+        getCSharpData();
+
+        function handleResponse(response)
+        {
+            console.log(response);
+            return response.json();                
+        }
+        function handleData(text)
+        {
+            console.log(text);
+        }
+        function handleError(error)
+        {
+            console.log("Error!!!", error);
+        }
+
+
+        const errMsgEl = document.querySelector(".error-msg");
+        errMsgEl.addEventListener("click", hideError);
+
         function handleSubmit(event) 
         {
             console.log(event.type);
@@ -57,16 +132,16 @@
             fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function(response) 
             {
                 // console.log(response);
-                return response.text();
+                return response.JSON();
 
-            }).then(function(data) 
+            }).then(function(countryData) 
             {
-                console.log("data:", data, typeof(data));
-                const countryData = JSON.parse(data);
-                console.log(countryData);
+                //console.log("data:", data, typeof(data));
+                //const countryData = JSON.parse(data);
+                //console.log(countryData);
                 const pop = countryData[0].population;
                 console.log(pop);
-                const popEl = document.querySelector("#pop");
+                const popEl = document.querySelector("#population");
                 popEl.innerText = pop;
 
                 const name = countryData[0].name;
@@ -79,12 +154,32 @@
                 const capitalEl = document.querySelector("#capital");
                 capitalEl.innerText = capital;
 
+                const flag = countryData[0].flag;
+                console.log(flag);
+                const flagEl = document.querySelector("#flag");
+                flagEl.innerText = flag;
 
-            }).catch(function() 
+                const location = countryData[0].latlng;
+                console.log(location);
+                const locationEl = document.querySelector("#location");
+                locationEl.innerText = location;
+
+            }).catch(function(error) 
             {
+                console.log("Catch:", error.message);
+                const errMsgEl = document.querySelector(".error-msg");
+                errMsgEl.classList.add("active");
+                errMsgEl.innerText = error.message;
+
+                setTimeout(hideError, 4000);
 
             });
             // debugger;
+        }
+        function hideError()
+        {
+            const errMsgEl = document.querySelector(".error-msg");
+            errMsgEl.classList.remove("active")
         }
         const form = document.querySelector("#country-form");
         // ELEMENT.addEventListener( EVENT TYPE, FUNCTION)

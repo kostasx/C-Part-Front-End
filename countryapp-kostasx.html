@@ -8,6 +8,25 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .error-msg {
+            background-color: tomato;
+            color: white;
+            width: 200px;
+            padding: 20px;
+            position: fixed;
+            bottom: 30px;
+            border-radius: 32px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.4);
+            right: -280px;
+            transition: all 1s ease;
+        }
+        .active {
+            right: 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,6 +48,10 @@
         <!-- Comment/Uncomment: Ctrl + / -->
     </div>
 
+    <div class="error-msg">
+        Error Message!
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -38,60 +61,58 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-        
     <script>
-        function handleResponse(response){
-            console.log(response);
-            return response.json();
+        function handleResponse( response ){
+                console.log( response );
+                return response.json();
         }
         function handleData(str){
             console.log(str);
         }
         function handleError(error){
-            console.log("Error!!!", error);
+                console.log("Error!!!", error);
         }
-        function getCSharpData() {
+        function getCSharpData(){
+
             fetch("https://csharp-server.kostasx.repl.co/")
-            .then(handleResponse)           
-            .then(handleData)
-            .catch(handleError);
+            .then( handleResponse )
+            .then( handleData )
+            .catch( handleError );
+            
         }
         // getCSharpData();
+        const errMsgEl = document.querySelector(".error-msg");
+        errMsgEl.addEventListener("click", hideError);
 
-        
         function handleSubmit(event) {
-            console.log(event.type);
             event.preventDefault();
             const countryInput = form.querySelector("input");
             const selectedCountry = countryInput.value;
-            console.log(selectedCountry);
             fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function (response) {
-                // console.log(response);
-                return response.text();
+                return response.json();
 
-            }).then(function (data) {
+            }).then(function (countryData) {
 
-                console.log(data);
-                const countryData = JSON.parse(data);
-                console.log(countryData);
                 const pop = countryData[0].population;
-                console.log(pop);
                 const popEl = document.querySelector("#pop");
                 popEl.innerText = pop;
-                // display name & capital
-                const countryName = countryData[0].altSpellings[2];
-                console.log(countryName);
-                const countryNameEl = document.querySelector("#countryName");
-                countryNameEl.innerText = countryName;
-                const capital = countryData[0].capital;
-                const capitalEl = document.querySelector("#capital");
-                capitalEl.innerText = capital;
-                
+                // display country name & capital
 
-            }).catch(function () {
+            }).catch(function(error){
+
+                console.log("Catch:", error.message);
+                errMsgEl.classList.add("active");
+                errMsgEl.innerText = error.message;
+
+                // setTimeout( FUNCTION, MS );
+                // setInterval( FUNCTION, MS );
+                setTimeout( hideError, 4000 );
 
             });
             // debugger;
+        }
+        function hideError(){
+            errMsgEl.classList.remove("active");
         }
         const form = document.querySelector("#country-form");
         // ELEMENT.addEventListener( EVENT TYPE, FUNCTION)

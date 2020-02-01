@@ -24,6 +24,8 @@
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
                 <span id="pop"></span>
+                <span id="cntrName"></span>
+                <span id="capital"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -53,17 +55,18 @@
 
                 console.log(data);
                 const countryData = JSON.parse(data);
-                const countryCapital = JSON.parse(data)
                 console.log(countryData);
-                const pop = countryData[0].population;
-                const pop1 = countryData[0].capital;                
-
+                const pop = "Population: " + countryData[0].population;
                 console.log(pop);
                 const popEl = document.querySelector("#pop");
-                popEl.innerText = "Population: " + pop + " Capital: " + pop1;
-                // Display name and capital
-
-
+                popEl.innerText = pop;
+                const cntrName = "Country name: " + countryData[0].altSpellings[2];
+                console.log(cntrName);
+                const cntrNameEl = document.querySelector("#cntrName");
+                cntrNameEl.innerText = cntrName;
+                const capital = "Capital name: " + countryData[0].capital;
+                const capitalEl = document.querySelector("#capital");
+                capitalEl.innerText = capital;
             }).catch(function () {
 
             });
