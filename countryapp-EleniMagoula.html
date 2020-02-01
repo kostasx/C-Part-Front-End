@@ -21,17 +21,11 @@
                     <input type="text" name="country" placeholder="country, e.g. Greece">
                     <button>Submit</button>
                 </form>
-            </div>           
-        </section>
-        <section class="row" id="main">
+            </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
                 <span id="pop"></span>
-            </div>
-            <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="countryname"></span>
-            </div>
-            <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="capital"></span>
+                <span id="cap"></span>
+                <span id="name"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -47,41 +41,33 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <script>
-        function handleSubmit(event) 
-        {
+        function handleSubmit(event) {
             console.log(event.type);
             event.preventDefault();
             const countryInput = form.querySelector("input");
             const selectedCountry = countryInput.value;
             console.log(selectedCountry);
-            fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function(response) 
-            {
+            fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function (response) {
                 // console.log(response);
                 return response.text();
 
-            }).then(function(data) 
-            {
-                console.log("data:", data, typeof(data));
+            }).then(function (data) {
+
+                console.log( "data:", data, typeof data );
                 const countryData = JSON.parse(data);
                 console.log(countryData);
                 const pop = countryData[0].population;
-                console.log(pop);
-                const popEl = document.querySelector("#pop");
-                popEl.innerText = pop;
-
+                const cap = countryData[0].capital;
                 const name = countryData[0].name;
-                console.log(name);
-                const nameEl = document.querySelector("#countryname");
+                const popEl = document.querySelector("#pop");
+                const capEl = document.querySelector("#cap");
+                const nameEl = document.querySelector("#name");
+                popEl.innerText = pop;
+                capEl.innerText = cap;
                 nameEl.innerText = name;
+                // display name & capital
 
-                const capital = countryData[0].capital;
-                console.log(capital);
-                const capitalEl = document.querySelector("#capital");
-                capitalEl.innerText = capital;
-
-
-            }).catch(function() 
-            {
+            }).catch(function () {
 
             });
             // debugger;
@@ -102,3 +88,5 @@
 </body>
 
 </html>
+
+<!--Console: variableName instanceof Array/Function klp > true/false (works as a boolean)-->
