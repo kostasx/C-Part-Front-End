@@ -40,17 +40,23 @@
         crossorigin="anonymous"></script>
         
     <script>
+        function handleResponse(response){
+            console.log(response);
+            return response.json();
+        }
+        function handleData(str){
+            console.log(str);
+        }
+        function handleError(error){
+            console.log("Error!!!", error);
+        }
         function getCSharpData() {
             fetch("https://csharp-server.kostasx.repl.co/")
-            .then(function(response){
-                console.log(response);
-                return response.text()
-            })
-            .then(function(text){
-                console.log(text);
-            });
+            .then(handleResponse)           
+            .then(handleData)
+            .catch(handleError);
         }
-        getCSharpData();
+        // getCSharpData();
 
         
         function handleSubmit(event) {
