@@ -8,6 +8,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <style>
+        .error-msg{
+            background-color: tomato;
+            color: white;
+            width: 200px;
+            padding: 20px;
+            position:fixed;
+            bottom: 30px;
+            right: 30px;
+            border-radius: 32px 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.4);
+            right: -280px; /* the last right that it reads is valid*/
+            transition: right 1s ease;
+            transition: all 35s ease;
+        }
+        .active {
+            right:30px;
+            background-color: violet;
+        }
+        </style>
 </head>
 
 <body>
@@ -34,7 +56,9 @@
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
     </div>
-
+    <div class="error-msg">
+        Error Message!
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -107,9 +131,20 @@
                 capitalEl.innerText = capital;
 
             }).catch(function (error) {
-                console.log(error.message); //if the submit is empty> the request ur is the
+                console.log("Catch:", error.message);
+                const errMsgEl = document.querySelector(".error-msg");
+                errMsgEl.classList.add("active");
+                errMsgEl.innerText = error.message;
+                //console.log(error.message); //if the submit is empty> the request ur is the
+
+                //setTimeout(FUNCTION, MS);
+                setTimeout( hideError, 4000);
             });
             // debugger;
+        }
+        function hideError(){
+            const errMsgEl = document.querySelector(".error-msg");
+            errMsgEl.classList.remove("active");
         }
         const form = document.querySelector("#country-form");
         // ELEMENT.addEventListener( EVENT TYPE, FUNCTION)
