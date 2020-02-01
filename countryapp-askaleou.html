@@ -25,13 +25,19 @@
         </section>
         <section class="row" id="main">
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="pop"></span>
+                Population: <span id="population"> </span>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="countryname"></span>
+                Country Name: <span id="countryname"> </span>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="capital"></span>
+                Capital: <span id="capital"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                Flag: <span id="flag"> </span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                Location: <span id="location"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -66,7 +72,7 @@
                 console.log(countryData);
                 const pop = countryData[0].population;
                 console.log(pop);
-                const popEl = document.querySelector("#pop");
+                const popEl = document.querySelector("#population");
                 popEl.innerText = pop;
 
                 const name = countryData[0].name;
@@ -79,6 +85,15 @@
                 const capitalEl = document.querySelector("#capital");
                 capitalEl.innerText = capital;
 
+                const flag = countryData[0].flag;
+                console.log(flag);
+                const flagEl = document.querySelector("#flag");
+                flagEl.innerText = flag;
+
+                const location = countryData[0].latlng;
+                console.log(location);
+                const locationEl = document.querySelector("#location");
+                locationEl.innerText = location;
 
             }).catch(function() 
             {
