@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,11 @@
                 </form>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="pop"></span>
+               <span>Population:</span><span id="pop"></span>
+               <br/>
+               <span>Name:</span><span id="name"></span>
+               <br/>
+               <span>Capital:</span><span id="capital"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -51,14 +55,26 @@
 
             }).then(function (data) {
 
-                console.log(data);
+                console.log(data, data, typeof data);
                 const countryData = JSON.parse(data);
                 console.log(countryData);
                 const pop = countryData[0].population;
                 console.log(pop);
-                const popEl = document.querySelector("#pop");
-                popEl.innerText = pop;
 
+                const name = countryData[0].name;
+                console.log(name);
+                 
+                const capital = countryData[0].capital;
+                console.log(capital);
+                
+                
+                const popEl = document.querySelector("#pop");
+                const nameEl = document.querySelector("#name");
+                const capitalEl = document.querySelector("#capital");
+                popEl.innerText = pop;
+                nameEl.innerText = name;
+                capitalEl.innerText = capital;
+                // diplay name and capital
             }).catch(function () {
 
             });

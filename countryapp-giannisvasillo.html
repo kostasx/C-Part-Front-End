@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,8 @@
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
                 <span id="pop"></span>
+                <span id="nameCountry"></span>
+                <span id="capital"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -58,6 +60,14 @@
                 console.log(pop);
                 const popEl = document.querySelector("#pop");
                 popEl.innerText = pop;
+                //display name and capital
+                const nameCountry = countryData[0].nativeName;
+                const nameCountryEl = document.querySelector("#nameCountry");
+                nameCountryEl.innerText = nameCountry;
+
+                const capital = countryData[0].capital;
+                const capitalEl = document.querySelector("#capital");
+                capitalEl.innerText = capital;
 
             }).catch(function () {
 

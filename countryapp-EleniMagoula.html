@@ -23,8 +23,8 @@
                 </form>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="pop"></span>
-                <span id="cap"></span>
+                <span id="population"></span>
+                <span id="capital"></span>
                 <span id="name"></span>
             </div>
         </section>
@@ -56,15 +56,15 @@
                 console.log( "data:", data, typeof data );
                 const countryData = JSON.parse(data);
                 console.log(countryData);
-                const pop = countryData[0].population;
-                const cap = countryData[0].capital;
+                const population = countryData[0].population;
+                const capital = countryData[0].capital;
                 const name = countryData[0].name;
-                const popEl = document.querySelector("#pop");
-                const capEl = document.querySelector("#cap");
-                const nameEl = document.querySelector("#name");
-                popEl.innerText = pop;
-                capEl.innerText = cap;
-                nameEl.innerText = name;
+                const countryPopulation = document.querySelector("#population");
+                const countryCapital = document.querySelector("#capital");
+                const countryName = document.querySelector("#name");
+                countryPopulation.innerText = population;
+                countryCapital.innerText = capital;
+                countryName.innerText = name;
                 // display name & capital
 
             }).catch(function () {
