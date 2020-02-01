@@ -8,6 +8,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+        .error-msg {
+            background-color: red;
+            color: ivory;
+            width: 200px;
+            padding: 20px;
+            position: fixed; /* topo8etei to antikeimeno se sxesh me to viewport me vash ta top-right-bottom-left */
+            bottom: 30px;
+            border-radius: 32px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.5); /* 0.5 > transparency */
+            right: -280px;
+            transition: all 3s ease; /* na kanw animate metaksu css rules / 1s: 1 second diarkeia */
+        }
+
+        .active { /* when I apply that css class, it overrides the previous css rule */
+            right: 30px;
+            background-color: orange;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,6 +53,10 @@
         <!-- Comment/Uncomment: Ctrl + / -->
     </div>
 
+    <div class="error-msg">
+        Error Message!
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -41,21 +67,43 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <script>
+
+        function handleResponse( response ) { // auto pou mas esteile o server (response) > then trekse to function me to response ws parametro
+            console.log( response );
+            return response.json(); 
+        }
+
+        function handleData(str) { // fetch and text > promises
+            console.log(str); // again promise based (then) / asugxronh entolh    
+        }
+
+        function handleError(error) { // e.g. in case i make a url error
+            console.log("Error!!!", error); // prints message and type of error
+        }
+
+        function getCSharpData() {
+        // promise based functions: kapoia stigmh sto mellon 8a oloklhrw8oun
+            fetch("https://csharp-server.kostasx.repl.co/")
+            .then( handleResponse ) // instead of response.text() which returns text / .json() returns a json file in console.log
+            .then( handleData ) // simplification k ka8arogrammeno - make separate functions & mporoume na epanaxrhsimopoihsoume ta handleResponse, handleData kai handleError
+            .catch( handleError );
+        }
+        //getCSharpData();
+
+        const errorMessage = document.querySelector(".error-msg");
+        errorMessage.addEventListener("click", hideError); // to remove div immediately when clicking on it
+
         function handleSubmit(event) {
             console.log(event.type);
             event.preventDefault();
             const countryInput = form.querySelector("input");
             const selectedCountry = countryInput.value;
-            console.log(selectedCountry);
             fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function (response) {
-                // console.log(response);
-                return response.text();
+                return response.json();
 
-            }).then(function (data) {
+            }).then(function (countryData) {
 
-                console.log( "data:", data, typeof data );
-                const countryData = JSON.parse(data);
-                console.log(countryData);
+                //console.log( "data:", data, typeof data );
                 const population = countryData[0].population;
                 const capital = countryData[0].capital;
                 const name = countryData[0].name;
@@ -67,11 +115,23 @@
                 countryName.innerText = name;
                 // display name & capital
 
-            }).catch(function () {
+            }).catch(function (error) {
+                console.log("Catch:", error.message); // e.g. an de valw input (keno)
+                const errorMsg = document.querySelector(".error-msg");
+                errorMsg.classList.add("active");
+                errorMsg.innerText = error.message;
 
+                // setTimeout( FUNCTIONS, MS );
+                // setInterval ( FUNCTION, MS );
+                setTimeout( hideError, 4000 ); // xronos pou kalei function
             });
             // debugger;
         }
+        function hideError() { // mporw na ftiaksw to hideError kai eksw apo thn catch / function kai einai dia8esimh kai sta duo
+            
+            errorMessage.classList.remove("active"); // afairei thn class active ara pairnei ta prohgoumena properties (kruvetai)
+        }
+
         const form = document.querySelector("#country-form");
         // ELEMENT.addEventListener( EVENT TYPE, FUNCTION)
         form.addEventListener("submit", handleSubmit);
