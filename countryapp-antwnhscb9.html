@@ -53,11 +53,16 @@
 
                 console.log(data);
                 const countryData = JSON.parse(data);
+                const countryCapital = JSON.parse(data)
                 console.log(countryData);
                 const pop = countryData[0].population;
+                const pop1 = countryData[0].capital;                
+
                 console.log(pop);
                 const popEl = document.querySelector("#pop");
-                popEl.innerText = pop;
+                popEl.innerText = "Population: " + pop + " Capital: " + pop1;
+                // Display name and capital
+
 
             }).catch(function () {
 
