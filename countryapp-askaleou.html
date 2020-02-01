@@ -53,6 +53,48 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <script>
+        
+        function getCSharpData()
+        {
+            // fetch("https://csharp-server.kostasx.repl.co/")
+            // .then(function(response)
+            // {
+            //     console.log(response);
+            //     return response.text();                
+            // })
+            // .then(function(text)
+            // {
+            //     console.log(text);
+            // })
+            // .catch(function(error)
+            // {
+            //     console.log("Error!!!", error);
+            // });
+
+            fetch("https://csharp-server.kostasx.repl.co/")
+            .then(handleResponse)
+            .then(handleData)
+            .catch(handleError);
+        }
+        getCSharpData();
+
+        function handleResponse(response)
+        {
+            console.log(response);
+            return response.json();                
+        }
+        function handleData(text)
+        {
+            console.log(text);
+        }
+        function handleError(error)
+        {
+            console.log("Error!!!", error);
+        }
+
+
+
+
         function handleSubmit(event) 
         {
             console.log(event.type);
