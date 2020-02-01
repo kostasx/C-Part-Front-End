@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container border border-dark mt-4">
+        <h1>Country App</h1>
+        <!-- Emmet: section.row#main -->
+        <section class="row" id="main">
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <form id="country-form" action="https://google.com/search">
+                    <input type="text" name="country" placeholder="country, e.g. Greece">
+                    <button>Submit</button>
+                </form>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <span id="pop"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <span id="nam"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <span id="cap"></span>
+            </div>
+        </section>
+        <!-- Comment/Uncomment: Ctrl + / -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script>
+        function handleSubmit(event) {
+            console.log(event.type);
+            event.preventDefault();
+            const countryInput = form.querySelector("input");
+            const selectedCountry = countryInput.value;
+            console.log(selectedCountry);
+            fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function (response) {
+                // console.log(response);
+                return response.text();
+
+            }).then(function (data) {
+                console.log("data:", data, typeof data);
+               // console.log(data);
+                const countryData = JSON.parse(data);
+               // console.log(countryData);
+                const pop = countryData[0].population; //get population from countryData array
+               // console.log(pop);
+                const popEl = document.querySelector("#pop"); //sava #pop ref of htm; in a value
+                popEl.innerText = pop; //assign the pop value to html ref.innerText 
+                const nam = countryData[0].name; 
+                const namE1 = document.querySelector("#name");
+                const cap = countryData[0].capital; 
+                const capE1 = document.querySelector("#cap");
+
+
+            }).catch(function () {
+
+            });
+            // debugger;
+        }
+        const form = document.querySelector("#country-form");
+        // ELEMENT.addEventListener( EVENT TYPE, FUNCTION)
+        form.addEventListener("submit", handleSubmit);
+        // inside addEventListener:
+        // "submit" -> handleSubmit({ ... })
+
+        // form.setAttribute();
+        // form.getAttribute();
+        // form.remove(); // Remove form element
+        // form.innerHTML = "<p>Wow</p>";
+        // form.innerHTML += "<p>wow</p>"
+        // form.innerText = "<p>wow</p>"
+    </script>
+</body>
+
+</html>
