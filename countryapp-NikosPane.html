@@ -59,10 +59,13 @@
                 const popEl = document.querySelector("#pop");
                 popEl.innerText = pop;
                 // display name & capital
+                const countryName = countryData[0].altSpellings[2];
+                console.log(countryName);
+                const countryNameEl = document.querySelector("#countryName");
+                countryNameEl.innerText = countryName;
                 const capital = countryData[0].capital;
-                const name = countryData[0].name;
-                console.log(capital);
-                console.log(name);
+                const capitalEl = document.querySelector("#capital");
+                capitalEl.innerText = capital;
                 
 
             }).catch(function () {
