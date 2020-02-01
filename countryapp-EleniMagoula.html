@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,9 @@
                 </form>
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
-                <span id="pop"></span>
+                <span id="population"></span>
+                <span id="capital"></span>
+                <span id="name"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -51,13 +53,19 @@
 
             }).then(function (data) {
 
-                console.log(data);
+                console.log( "data:", data, typeof data );
                 const countryData = JSON.parse(data);
                 console.log(countryData);
-                const pop = countryData[0].population;
-                console.log(pop);
-                const popEl = document.querySelector("#pop");
-                popEl.innerText = pop;
+                const population = countryData[0].population;
+                const capital = countryData[0].capital;
+                const name = countryData[0].name;
+                const countryPopulation = document.querySelector("#population");
+                const countryCapital = document.querySelector("#capital");
+                const countryName = document.querySelector("#name");
+                countryPopulation.innerText = population;
+                countryCapital.innerText = capital;
+                countryName.innerText = name;
+                // display name & capital
 
             }).catch(function () {
 
@@ -80,3 +88,5 @@
 </body>
 
 </html>
+
+<!--Console: variableName instanceof Array/Function klp > true/false (works as a boolean)-->

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,9 +21,17 @@
                     <input type="text" name="country" placeholder="country, e.g. Greece">
                     <button>Submit</button>
                 </form>
-            </div>
+            </div>           
+        </section>
+        <section class="row" id="main">
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
                 <span id="pop"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <span id="countryname"></span>
+            </div>
+            <div class="col-12 p-4 col-sm-4 col-md-6 border">
+                <span id="capital"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -39,19 +47,21 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     <script>
-        function handleSubmit(event) {
+        function handleSubmit(event) 
+        {
             console.log(event.type);
             event.preventDefault();
             const countryInput = form.querySelector("input");
             const selectedCountry = countryInput.value;
             console.log(selectedCountry);
-            fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function (response) {
+            fetch("https://restcountries.eu/rest/v2/name/" + selectedCountry).then(function(response) 
+            {
                 // console.log(response);
                 return response.text();
 
-            }).then(function (data) {
-
-                console.log(data);
+            }).then(function(data) 
+            {
+                console.log("data:", data, typeof(data));
                 const countryData = JSON.parse(data);
                 console.log(countryData);
                 const pop = countryData[0].population;
@@ -59,7 +69,19 @@
                 const popEl = document.querySelector("#pop");
                 popEl.innerText = pop;
 
-            }).catch(function () {
+                const name = countryData[0].name;
+                console.log(name);
+                const nameEl = document.querySelector("#countryname");
+                nameEl.innerText = name;
+
+                const capital = countryData[0].capital;
+                console.log(capital);
+                const capitalEl = document.querySelector("#capital");
+                capitalEl.innerText = capital;
+
+
+            }).catch(function() 
+            {
 
             });
             // debugger;

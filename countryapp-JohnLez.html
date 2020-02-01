@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,8 @@
             </div>
             <div class="col-12 p-4 col-sm-4 col-md-6 border">
                 <span id="pop"></span>
+                <span id="pop2"></span>
+                <span id="pop3"></span>
             </div>
         </section>
         <!-- Comment/Uncomment: Ctrl + / -->
@@ -55,9 +57,15 @@
                 const countryData = JSON.parse(data);
                 console.log(countryData);
                 const pop = countryData[0].population;
+                const pop2 = countryData[0].capital;
+                const pop3 = countryData[0].name;
                 console.log(pop);
                 const popEl = document.querySelector("#pop");
+                const popEl2 = document.querySelector("#pop2");
+                const popEl3 = document.querySelector("#pop3");
                 popEl.innerText = pop;
+                popEl2.innerText = pop2;
+                popEl3.innerText = pop3;
 
             }).catch(function () {
 
